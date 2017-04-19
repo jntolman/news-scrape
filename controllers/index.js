@@ -10,7 +10,8 @@
 // dependencies
 // =============================================================
 const request = require('request'),
-      cheerio = require('cheerio');
+      cheerio = require('cheerio'),
+      Article = require("../models/article");
 
 module.exports = function(app) {
 
@@ -36,10 +37,28 @@ module.exports = function(app) {
                         title: title,
                         link: link
                     };
-                    results.push(single);
+                    // create new article
+                    let entry = new Article(single);
+                    // save to database
+                    entry.save(function(err, doc) {
+                        if (err) {
+                            if (!err.errors.link) {
+                                console.log(err);
+                            }
+                        } else {
+                            console.log('new article added');
+                        }
+                    });
                 }
             });
-            res.json(results);
+            Article.find({})
+                .exec(function(error, docs) {
+                    if (error) {
+                        res.send(error);
+                    } else {
+                        res.json(docs);
+                    }
+                });
         });
     });
 
