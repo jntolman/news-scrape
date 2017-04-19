@@ -3,7 +3,7 @@
 /**
  * 
  * Homework Assignment 18 - All the News That's Fit to Scrape
- * Jarrett Tolman - controllers/index.js
+ * Jarrett Tolman - models/article.js
  * 
  */
 

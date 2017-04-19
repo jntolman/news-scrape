@@ -9,4 +9,5 @@ This is a Node/Express/Mongo (Mongoose) app that scrapes articles from a news we
 * Mongoose ORM
 * Bootsrap
 * Handlebars
+* jQuery
 * Heroku, mLab

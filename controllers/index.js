@@ -17,10 +17,20 @@ module.exports = function(app) {
 
     // root route
     app.get('/', function(req, res) {
-        let hbsObj = {
-            title: 'All the News That\'s Fit to Scrape'
-        };
-        res.render('index', hbsObj);
+        Article.find({})
+            .exec(function(error, articles) {
+                if (error) {
+                    console.log(error);
+                    res.status(500);
+                } else {
+                    console.log(articles);
+                    let hbsObj = {
+                        title: 'Poop the News That\'s Fit to Scrape',
+                        articles: articles
+                    };
+                    res.render('index', hbsObj);
+                }
+            });
     });
 
     // scrape articles
@@ -54,9 +64,10 @@ module.exports = function(app) {
             Article.find({})
                 .exec(function(error, docs) {
                     if (error) {
-                        res.send(error);
+                        console.log(error);
+                        res.status(500);
                     } else {
-                        res.json(docs);
+                        res.status(200).json(docs);
                     }
                 });
         });

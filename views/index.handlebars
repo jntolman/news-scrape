@@ -6,6 +6,12 @@
     </div>
 </div>
 
-<div id="articles"></div>
+<div id="articles">
+    {{#each articles}}
+        <p>{{this.title}}</p>
+    {{/each}}
+</div>
 
-<div id="notes"></div>
+<div id="notes">
+    {{this.articles}}
+</div>
