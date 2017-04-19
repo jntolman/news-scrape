@@ -38,3 +38,6 @@ jspm_packages
 
 # macOS system files
 .DS_Store
+
+# vs code workspace settings
+.vscode

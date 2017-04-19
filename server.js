@@ -6,3 +6,56 @@
  * Jarrett Tolman - server.js
  * 
  */
+
+// dependencies
+// =============================================================
+const express = require('express'),
+      exphbs = require('express-handlebars'),
+      methodOverride = require('method-override'),
+      bodyParser = require('body-parser'),
+      logger = require('morgan'),
+      mongoose = require('mongoose');
+
+// set up express app
+// =============================================================
+const PORT = 3000;
+let app = express();
+
+app
+    .use(bodyParser.json())
+    .use(bodyParser.urlencoded({ extended:true }))
+    .use(bodyParser.text())
+    .use(bodyParser.json({ type: 'application/vnd.api+json' }))
+    .use(logger('dev'))
+    .use(methodOverride('_method'))
+    .use(express.static(__dirname + '/public'))
+    .engine('handlebars', exphbs({ defaultLayout: 'main' }))
+    .set('view engine', 'handlebars');
+
+// import controllers and give access to app
+require('./controllers')(app);
+
+// configure mongoose
+// =============================================================
+// set mongoose to leverage promises
+mongoose.Promise = Promise;
+
+// Database configuration with mongoose
+mongoose.connect("mongodb://localhost/news");
+let db = mongoose.connection;
+
+// Show any mongoose errors
+db.on("error", function(error) {
+    console.log("Mongoose Error: ", error);
+});
+
+// Once logged in to the db through mongoose, log a success message
+db.once("open", function() {
+    console.log("Mongoose connection successful.");
+    // start the app, listen on port 3000
+    app.listen(3000, function() {
+        console.log("App running on port 3000!");
+    });
+});
+
+module.exports = app;
