@@ -7,6 +7,23 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "jshintConfig": {
+    "esversion": 6
+  },
+  "eslintConfig": {
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false,
+            "impliedStrict": true
+        }
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jntolman/news-scrape.git"
