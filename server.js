@@ -37,7 +37,7 @@ app
 mongoose.Promise = Promise;
 
 // Database configuration with mongoose
-mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/news");
+mongoose.connect(process.env.MONGODB_URI);
 
 const db = mongoose.connection;
 
