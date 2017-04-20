@@ -17,7 +17,7 @@ const express = require('express'),
 
 // set up express app
 // =============================================================
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 let app = express();
 
 app
@@ -36,8 +36,10 @@ app
 // set mongoose to leverage promises
 mongoose.Promise = Promise;
 
+const dbURI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+
 // Database configuration with mongoose
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(dbURI);
 
 const db = mongoose.connection;
 
@@ -50,7 +52,7 @@ db.on("error", function(error) {
 db.once("open", function() {
     console.log("Mongoose connection successful.");
     // start the server, listen on port 3000
-    app.listen(3000, function() {
+    app.listen(PORT, function() {
         console.log("App running on port 3000!");
     });
 });
