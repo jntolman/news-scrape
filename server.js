@@ -36,7 +36,7 @@ app
 // set mongoose to leverage promises
 mongoose.Promise = Promise;
 
-const dbURI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+const dbURI = process.env.MONGODB_URI || "mongodb://localhost:27017/news";
 
 // Database configuration with mongoose
 mongoose.connect(dbURI);
