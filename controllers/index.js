@@ -25,7 +25,7 @@ module.exports = function(app) {
                 } else {
                     console.log(articles);
                     let hbsObj = {
-                        title: 'Poop the News That\'s Fit to Scrape',
+                        title: 'All the News That\'s Fit to Scrape',
                         articles: articles
                     };
                     res.render('index', hbsObj);

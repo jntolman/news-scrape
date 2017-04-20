@@ -1,3 +1,16 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Mongo Scraper</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="/saved">Saved Articles</a></li>
+        </ul>
+        <button class="btn btn-primary navbar-btn">Scrape New Articles!</button>
+    </div>
+</nav>
+
 <div class="jumbotron">
     <div class="row">
         <div class="col-md-12">
@@ -8,10 +21,20 @@
 
 <div id="articles">
     {{#each articles}}
-        <p>{{this.title}}</p>
+        <div class="well">
+            <div class="row">
+                <div class="col col-md-8">
+                    <h4><a href="{{this.link}}">{{this.title}}</a></h4>
+                </div>
+                <div class="col col-md-2">
+                    <button class="btn btn-success">Save Article</button>
+                </div>
+                <div class="col col-md-2">
+                    <button class="btn btn-warning">Dismiss Article</button>
+                </div>
+            </div>
+        </div>
     {{/each}}
 </div>
 
-<div id="notes">
-    {{this.articles}}
-</div>
+<div id="notes"></div>
