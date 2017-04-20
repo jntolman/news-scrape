@@ -40,7 +40,7 @@ mongoose.Promise = Promise;
 if (process.env !== 'production') {
     mongoose.connect("mongodb://localhost/news");
 } else {
-    mongoose.connect(process.env.MONGODB_URI);
+    mongoose.connect(MONGODB_URI);
 }
 
 const db = mongoose.connection;
