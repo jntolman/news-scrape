@@ -7,9 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "jshintConfig": {
-    "esversion": 6
-  },
   "eslintConfig": {
     "env": {
         "browser": true,
@@ -39,7 +36,6 @@
     "cheerio": "^0.22.0",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
-    "method-override": "^2.3.8",
     "mongoose": "^4.9.4",
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "^1.8.1",
