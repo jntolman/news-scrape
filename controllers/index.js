@@ -43,6 +43,7 @@ router.get('/saved', function(req, res) {
         .find({})
         .where('saved').equals(true)
         .where('deleted').equals(false)
+        .populate('notes')
         .sort('-date')
         .exec(function(error, articles) {
             if (error) {

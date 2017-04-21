@@ -13,7 +13,8 @@ const express = require('express'),
       router = express.Router(),
       request = require('request'),
       cheerio = require('cheerio'),
-      Article = require('../models/article');
+      Article = require('../models/article'),
+      Note = require('../models/note');
 
 // get all articles from database
 router.get('/', function(req, res) {
@@ -35,6 +36,7 @@ router.get('/saved', function(req, res) {
         .find({})
         .where('saved').equals(true)
         .where('deleted').equals(false)
+        .populate('notes')
         .exec(function(error, docs) {
             if (error) {
                 console.log(error);
@@ -93,6 +95,7 @@ router.get('/delete/:id', function(req, res) {
 });
 
 // add a note to a saved article
+
 
 // delete a note from a saved article
 

@@ -20,30 +20,44 @@
                     <h4><a href="{{this.link}}">{{this.title}}</a></h4>
                 </div>
                 <div class="col col-md-2">
-                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#myModal">Notes</a>
+                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#{{this.id}}">Notes</a>
                 </div>
                 <div class="col col-md-2">
                     <a class="btn btn-danger" href="/api/delete/{{this.id}}">Delete Article</a>
                 </div>
             </div>
         </div>
-    {{/each}}
-</div>
 
-<!-- notes modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Notes for {{this.title}}</h4>
-            </div>
-            <div class="modal-body">
-                <p>hello</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- notes modal -->
+        <div class="modal fade" id="{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Notes for {{this.title}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{#if this.notes}}
+                            {{#each this.notes}}
+                                <div class="well">
+                                    <p>{{this.text}}</p>
+                                </div>
+                            {{/each}}
+                                <div class="well">
+                                    <p>new note</p>
+                                </div>
+                        {{else}}
+                                <div class="well">
+                                    <p>new note</p>
+                                </div>
+                        {{/if}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+    {{/each}}
 </div>
