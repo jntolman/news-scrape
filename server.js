@@ -13,7 +13,8 @@ const express = require('express'),
       exphbs = require('express-handlebars'),
       bodyParser = require('body-parser'),
       logger = require('morgan'),
-      mongoose = require('mongoose');
+      mongoose = require('mongoose'),
+      methodOverride = require('method-override');
 
 // set up express app
 // =============================================================
@@ -25,6 +26,7 @@ app
     .use(bodyParser.urlencoded({ extended:true }))
     .use(bodyParser.text())
     .use(bodyParser.json({ type: 'application/vnd.api+json' }))
+    .use(methodOverride('_method'))
     .use(logger('dev'))
     .use(express.static(__dirname + '/public'))
     .engine('handlebars', exphbs({ defaultLayout: 'main' }))

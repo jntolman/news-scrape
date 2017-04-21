@@ -78,11 +78,10 @@ router.get('/save/:id', function(req, res) {
         });
 });
 
-// delete an article
-router.get('/delete/:id', function(req, res) {
-    Article.findByIdAndUpdate(req.params.id, {
-        $set: { deleted: true}
-        },
+// dismiss a scraped article
+router.get('/dismiss/:id', function(req, res) {
+    Article.findByIdAndUpdate(req.params.id,
+        { $set: { deleted: true } },
         { new: true },
         function(error, doc) {
             if (error) {
@@ -94,13 +93,51 @@ router.get('/delete/:id', function(req, res) {
         });
 });
 
-// add a note to a saved article
+// delete a saved article
+router.get('/delete/:id', function(req, res) {
+    Article.findByIdAndUpdate(req.params.id,
+        { $set: { deleted: true} },
+        { new: true },
+        function(error, doc) {
+            if (error) {
+                console.log(error);
+                res.status(500);
+            } else {
+                res.redirect('/saved');
+            }
+        }
+    );
+});
 
+// add a note to a saved article
+router.post('/notes/:id', function(req, res) {
+    console.log(req.body);
+    let newNote = new Note(req.body);
+    newNote.save(function(err, doc) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+        } else {
+            Article.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { 'notes': doc.id } },
+                function(error, newDoc) {
+                    if (error) {
+                        console.log(error);
+                        res.status(500);
+                    } else {
+                        res.redirect('/saved');
+                    }
+                }
+            );
+        }
+    });
+});
 
 // delete a note from a saved article
 
 // scrape articles
-router.get('/scrape', function(req, res) {
+router.get('/scrape', function(req, res, next) {
     request('https://news.ycombinator.com', function(error, response, html) {
         let $ = cheerio.load(html);
         let results = [];
@@ -127,8 +164,10 @@ router.get('/scrape', function(req, res) {
                 });
             }
         });
-        res.redirect('/');
+        next();
     });
+}, function(req, res) {
+    res.redirect('/');
 });
 
 module.exports = router;
