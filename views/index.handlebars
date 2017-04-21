@@ -17,10 +17,14 @@
                     <h4><a href="{{this.link}}">{{this.title}}</a></h4>
                 </div>
                 <div class="col col-md-2">
-                    <a class="btn btn-success" href="/api/save/{{this.id}}">Save Article</a>
+                    <form class="form-inline" action="/api/articles/save/{{this.id}}" method="POST">
+                        <button type="submit" class="btn btn-success">Save Article</button>
+                    </form>
                 </div>
                 <div class="col col-md-2">
-                    <a class="btn btn-warning" href="/api/dismiss/{{this.id}}">Dismiss Article</a>
+                    <form class="form-inline" action="/api/articles/dismiss/{{this.id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-warning">Dismiss Article</button>
+                    </form>
                 </div>
             </div>
         </div>

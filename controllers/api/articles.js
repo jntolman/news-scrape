@@ -3,7 +3,7 @@
 /**
  * 
  * Homework Assignment 18 - All the News That's Fit to Scrape
- * Jarrett Tolman - controllers/api.js
+ * Jarrett Tolman - controllers/api/article.js
  * 
  */
 
@@ -13,8 +13,8 @@ const express = require('express'),
       router = express.Router(),
       request = require('request'),
       cheerio = require('cheerio'),
-      Article = require('../models/article'),
-      Note = require('../models/note');
+      Article = require('../../models/article'),
+      Note = require('../../models/note');
 
 // get all articles from database
 router.get('/', function(req, res) {
@@ -63,7 +63,7 @@ router.get('/deleted', function(req, res) {
 });
 
 // save an article
-router.get('/save/:id', function(req, res) {
+router.post('/save/:id', function(req, res) {
     Article.findByIdAndUpdate(req.params.id, {
         $set: { saved: true}
         },
@@ -79,7 +79,7 @@ router.get('/save/:id', function(req, res) {
 });
 
 // dismiss a scraped article
-router.get('/dismiss/:id', function(req, res) {
+router.delete('/dismiss/:id', function(req, res) {
     Article.findByIdAndUpdate(req.params.id,
         { $set: { deleted: true } },
         { new: true },
@@ -94,7 +94,7 @@ router.get('/dismiss/:id', function(req, res) {
 });
 
 // delete a saved article
-router.get('/delete/:id', function(req, res) {
+router.delete('/:id', function(req, res) {
     Article.findByIdAndUpdate(req.params.id,
         { $set: { deleted: true} },
         { new: true },
@@ -107,42 +107,6 @@ router.get('/delete/:id', function(req, res) {
             }
         }
     );
-});
-
-// add a note to a saved article
-router.post('/notes/:id', function(req, res) {
-    let newNote = new Note(req.body);
-    newNote.save(function(err, doc) {
-        if (err) {
-            console.log(err);
-            res.status(500);
-        } else {
-            Article.findOneAndUpdate(
-                { _id: req.params.id },
-                { $push: { 'notes': doc.id } },
-                function(error, newDoc) {
-                    if (error) {
-                        console.log(error);
-                        res.status(500);
-                    } else {
-                        res.redirect('/saved');
-                    }
-                }
-            );
-        }
-    });
-});
-
-// delete a note from a saved article
-router.delete('/notes/:id', function(req, res) {
-    Note.findByIdAndRemove(req.params.id, function(err, note) {
-        if (err) {
-            console.log(err);
-            res.status(500);
-        } else {
-            res.redirect('/saved');
-        }
-    });
 });
 
 // scrape articles
