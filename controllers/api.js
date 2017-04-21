@@ -111,7 +111,6 @@ router.get('/delete/:id', function(req, res) {
 
 // add a note to a saved article
 router.post('/notes/:id', function(req, res) {
-    console.log(req.body);
     let newNote = new Note(req.body);
     newNote.save(function(err, doc) {
         if (err) {
@@ -135,6 +134,16 @@ router.post('/notes/:id', function(req, res) {
 });
 
 // delete a note from a saved article
+router.delete('/notes/:id', function(req, res) {
+    Note.findByIdAndRemove(req.params.id, function(err, note) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+        } else {
+            res.redirect('/saved');
+        }
+    });
+});
 
 // scrape articles
 router.get('/scrape', function(req, res, next) {
