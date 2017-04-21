@@ -154,7 +154,7 @@ router.get('/scrape', function(req, res, next) {
             let title = $(this).children('a').text(),
                 link = $(this).children('a').attr('href'),
                 single = {};
-            if (link !== undefined &&  title !== '') {
+            if (link !== undefined && link.includes('http') &&  title !== '') {
                 single = {
                     title: title,
                     link: link
